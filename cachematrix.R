@@ -1,15 +1,42 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Programming assignment 2 functions
 
-## Write a short comment describing this function
+## Caches the vector
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    
+    mCache <- NULL
+    
+    set <- function(y){
+        x <<- y
+        mCache <<- NULL
+    }
+    
+    get <- function() x
+    
+    setsolve <- function(solve) mCache <<- solve
+    getsolve <- function() mCache
+    
+    list(set = set, get = get,
+         setsolve = setsolve,
+         getsolve = getsolve)
+    
 }
 
 
-## Write a short comment describing this function
+## Checks cache and returns data from cache if found else calculates solve
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x=matrix(), ...) {
+    ## Return a matrix that is the inverse of 'x'
+    mCache <- x$getsolve()
+    
+    if(!is.null(mCache))
+    {
+        message("getting cached data")
+        return(mCache)
+    }
+    
+    data <-x$get()
+    mCache <- solve(data,...)
+    x$setsolve(mCache)
+    mCache
 }
